@@ -95,20 +95,20 @@ function clip(subj, clips, clipType, scale, fillType) {
 
 // == CLIPPING METHODS ==
 
-function intersect(subj, clips) {
-  return clip(subj, clips, ClipType.INTERSECTION)
+function intersect(subj, clips, scale, fillType) {
+  return clip(subj, clips, ClipType.INTERSECTION, scale, fillType)
 }
 
-function union(subj, clips) {
-  return clip(subj, clips, ClipType.UNION)
+function union(subj, clips, scale, fillType) {
+  return clip(subj, clips, ClipType.UNION, scale, fillType)
 }
 
-function diff(subj, clips) {
-  return clip(subj, clips, ClipType.DIFFERENCE)
+function diff(subj, clips, scale, fillType) {
+  return clip(subj, clips, ClipType.DIFFERENCE, scale, fillType)
 }
 
-function xor(subj, clips) {
-  return clip(subj, clips, ClipType.XOR)
+function xor(subj, clips, scale, fillType) {
+  return clip(subj, clips, ClipType.XOR, scale, fillType)
 }
 
 // == POLYGON METHODS ==
@@ -217,11 +217,11 @@ Polygon.prototype.getHoles = function() {
 
 /** use clip method on subject polygon with multiple clip polygons **/
 
-Polygon.prototype.clipMultiple = function(clipPolygons, clipType) {
+Polygon.prototype.clipMultiple = function(clipPolygons, clipType, scale, fillType) {
   var clipPaths = clipPolygons.map(function(polygon) {
     return polygon.getPaths()
   })
-  var solution = clip(this.getPaths(), clipPaths, clipType)
+  var solution = clip(this.getPaths(), clipPaths, clipType, scale, fillType)
   if (solution) {
     return Polygon.assignShapesAndHoles(solution)
   }
@@ -230,38 +230,38 @@ Polygon.prototype.clipMultiple = function(clipPolygons, clipType) {
   return false
 }
 
-Polygon.prototype.diffMultiple = function (clipPolygons) {
-  return this.clipMultiple(clipPolygons, ClipType.DIFFERENCE)
+Polygon.prototype.diffMultiple = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple(clipPolygons, ClipType.DIFFERENCE, scale, fillType)
 }
 
-Polygon.prototype.intersectMultiple = function (clipPolygons) {
-  return this.clipMultiple(clipPolygons, ClipType.INTERSECTION)
+Polygon.prototype.intersectMultiple = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple(clipPolygons, ClipType.INTERSECTION, scale, fillType)
 }
 
-Polygon.prototype.unionMultiple = function (clipPolygons) {
-  return this.clipMultiple(clipPolygons, ClipType.UNION)
+Polygon.prototype.unionMultiple = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple(clipPolygons, ClipType.UNION, scale, fillType)
 }
 
-Polygon.prototype.xorMultiple = function (clipPolygons) {
-  return this.clipMultiple(clipPolygons, ClipType.XOR)
+Polygon.prototype.xorMultiple = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple(clipPolygons, ClipType.XOR, scale, fillType)
 }
 
 /** use clip method on subject polygon with a single clip polygon **/
 
-Polygon.prototype.diff = function (clipPolygons) {
-  return this.clipMultiple([clipPolygons], ClipType.DIFFERENCE)
+Polygon.prototype.diff = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple([clipPolygons], ClipType.DIFFERENCE, scale, fillType)
 }
 
-Polygon.prototype.intersect = function (clipPolygons) {
-  return this.clipMultiple([clipPolygons], ClipType.INTERSECTION)
+Polygon.prototype.intersect = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple([clipPolygons], ClipType.INTERSECTION, scale, fillType)
 }
 
-Polygon.prototype.union = function (clipPolygons) {
-  return this.clipMultiple([clipPolygons], ClipType.UNION)
+Polygon.prototype.union = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple([clipPolygons], ClipType.UNION, scale, fillType)
 }
 
-Polygon.prototype.xor = function (clipPolygons) {
-  return this.clipMultiple([clipPolygons], ClipType.XOR)
+Polygon.prototype.xor = function (clipPolygons, scale, fillType) {
+  return this.clipMultiple([clipPolygons], ClipType.XOR, scale, fillType)
 }
 
 /** use offset method on subject polygon **/
